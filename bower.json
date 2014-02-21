@@ -1,0 +1,36 @@
+{
+  "name": "angular-ui-router.stateHelper",
+  "main": "statehelper.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/marklagendijk/ui-router.stateHelper",
+  "authors": [
+    "Mark Lagendijk <mark@lagendijk.info>"
+  ],
+  "description": "A helper module for AngularUI Router, which allows you to define your states as an object tree.",
+  "keywords": [
+    "angular",
+    "helper",
+    "ui.router",
+    "ui-router",
+    "ui",
+    "router"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "package.json",
+    "gulpfile.js",
+    "bower_components",
+    "test",
+    "tests",
+    "config"
+  ],
+  "dependencies": {
+    "angular": "~1.2.13",
+    "angular-ui-router": "~0.2.7"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.8"
+  }
+}
