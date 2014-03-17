@@ -17,15 +17,18 @@ angular.module('ui.router.stateHelper', ['ui.router'])
          *
          * @param {Object} state - A regular ui.router state object.
          * @param {Array} [state.children] - An optional array of child states.
+         * @param {Boolean} keepOriginalNames - An optional flag that prevents conversion of names to dot notation if true.
          */
-        this.setNestedState = function(state){
-            fixStateName(state);
+        this.setNestedState = function(state, keepOriginalNames){
+            if (!keepOriginalNames){
+                fixStateName(state);
+            }
             $stateProvider.state(state);
 
             if(state.children && state.children.length){
                 state.children.forEach(function(childState){
                     childState.parent = state;
-                    self.setNestedState(childState);
+                    self.setNestedState(childState, keepOriginalNames);
                 });
             }
         };
