@@ -26,33 +26,35 @@ describe('ui-router.stateHelper', function(){
 			]
 		};
 
-        expectedState = {
-            name: 'root',
-            children: [
-                {
-                    name: 'root.login',
-                    templateUrl: '/partials/views/login.html'
-                },
-                {
-                    name: 'root.backup',
-                    children: [
-                        {
-                            name: 'root.backup.dashboard'
-                        }
-                    ]
-                }
-            ]
-        };
-
 		spyOn($stateProvider, 'state');
-		stateHelperProvider.setNestedState(rootState);
 	}));
 
 	describe('.setNestedState', function(){
+        beforeEach(inject(function(){
+            expectedState = {
+                name: 'root',
+                children: [
+                    {
+                        name: 'root.login',
+                        templateUrl: '/partials/views/login.html'
+                    },
+                    {
+                        name: 'root.backup',
+                        children: [
+                            {
+                                name: 'root.backup.dashboard'
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            stateHelperProvider.setNestedState(rootState);
+        }));
+
 		it('should set each state', function(){
 			expect($stateProvider.state.callCount).toBe(4);
 		});
-
 
 		it('should convert names to dot notation, set parent references', function(){
 			// Since the states are objects which contain references to each other, we are testing the eventual
@@ -66,4 +68,43 @@ describe('ui-router.stateHelper', function(){
 			expect($stateProvider.state.argsForCall[0][0]).toEqual(expectedState);
 		});
 	});
+
+    describe('.setNestedState with keepOriginalNames set to true', function(){
+        beforeEach(inject(function(){
+            expectedState = {
+                name: 'root',
+                children: [
+                    {
+                        name: 'login',
+                        templateUrl: '/partials/views/login.html'
+                    },
+                    {
+                        name: 'backup',
+                        children: [
+                            {
+                                name: 'dashboard'
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            stateHelperProvider.setNestedState(rootState, true);
+        }));
+
+        it('should not convert names to dot notation, set parent references', function(){
+            // Since the states are objects which contain references to each other, we are testing the eventual
+            // root state object (and not the root state object as it is passed to $stateProvider.$state).
+            // Because of this we have to test everything at once
+
+            expectedState.children[0].parent = expectedState;
+            expectedState.children[1].parent = expectedState;
+            expectedState.children[1].children[0].parent = expectedState.children[1];
+
+            expect($stateProvider.state.argsForCall[0][0]).toEqual(expectedState);
+        });
+    });
 });
+
+
+
