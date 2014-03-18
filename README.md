@@ -38,3 +38,25 @@ angular.module('myApp', ['ui.router', 'ui.router.stateHelper'])
 		});
 	});
 ```
+
+## Options
+### Dot notation name conversion
+By default, all state names are converted to use ui-router's dot notation (e.g. `parentStateName.childStateName`).
+This can be disabled by calling `.setNestedState()` with an optional second parameter of `true`.
+For example:
+
+``` javascript
+angular.module('myApp', ['ui.router', 'ui.router.stateHelper'])
+	.config(function(stateHelperProvider){
+		stateHelperProvider.setNestedState({
+			name: 'root',
+			templateUrl: 'root.html',
+			children: [
+				{
+					name: 'contacts',
+					templateUrl: 'contacts.html'
+				}
+			]
+		}, true);
+	});
+```
