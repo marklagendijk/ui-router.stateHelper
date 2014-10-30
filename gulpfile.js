@@ -1,5 +1,5 @@
 var gulp = require("gulp");
-var ngmin = require('gulp-ngmin');
+var ngmin = require('gulp-ng-annotate');
 var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
 var karma = require("gulp-karma");

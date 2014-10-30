@@ -29,7 +29,7 @@ describe('ui-router.stateHelper', function(){
 		spyOn($stateProvider, 'state');
 	}));
 
-	describe('.setNestedState', function(){
+	describe('.state', function(){
         beforeEach(inject(function(){
             expectedState = {
                 name: 'root',
@@ -49,7 +49,7 @@ describe('ui-router.stateHelper', function(){
                 ]
             };
 
-            stateHelperProvider.setNestedState(rootState);
+            stateHelperProvider.state(rootState);
         }));
 
 		it('should set each state', function(){
@@ -67,9 +67,13 @@ describe('ui-router.stateHelper', function(){
 
 			expect($stateProvider.state.argsForCall[0][0]).toEqual(expectedState);
 		});
+
+        it('should return itself to support chaining', function(){
+            expect($stateProvider.state(rootState)).toBe($stateProvider);
+        })
 	});
 
-    describe('.setNestedState with keepOriginalNames set to true', function(){
+    describe('.state with keepOriginalNames set to true', function(){
         beforeEach(inject(function(){
             expectedState = {
                 name: 'root',
@@ -89,7 +93,7 @@ describe('ui-router.stateHelper', function(){
                 ]
             };
 
-            stateHelperProvider.setNestedState(rootState, true);
+            stateHelperProvider.state(rootState, true);
         }));
 
         it('should not convert names to dot notation, set parent references', function(){
@@ -102,6 +106,13 @@ describe('ui-router.stateHelper', function(){
             expectedState.children[1].children[0].parent = expectedState.children[1];
 
             expect($stateProvider.state.argsForCall[0][0]).toEqual(expectedState);
+        });
+    });
+
+    describe('.setNestedState', function(){
+        it('should support .setNestedState as legacy name', function(){
+            stateHelperProvider.setNestedState(rootState);
+            expect($stateProvider.state.callCount).toBe(4);
         });
     });
 });
