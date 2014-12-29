@@ -1,7 +1,7 @@
 {
   "name": "angular-ui-router.stateHelper",
   "main": "statehelper.js",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "homepage": "https://github.com/marklagendijk/ui-router.stateHelper",
   "authors": [
     "Mark Lagendijk <mark@lagendijk.info>"

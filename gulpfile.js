@@ -7,7 +7,7 @@ var karma = require("gulp-karma");
 var config = require('./config/config.js');
 
 gulp.task("test", ["minify"], function(){
-    gulp.src(config.testFiles)
+    return gulp.src(config.testFiles)
         .pipe(karma({
             configFile: 'config/karma.conf.js',
             action: 'run'
@@ -15,9 +15,11 @@ gulp.task("test", ["minify"], function(){
 });
 
 gulp.task("minify", function(){
-    gulp.src("statehelper.js")
+    return gulp.src("statehelper.js")
         .pipe(ngmin())
         .pipe(uglify())
         .pipe(rename("statehelper.min.js"))
         .pipe(gulp.dest("./"));
 });
+
+gulp.task("default", ["minify", "test"]);

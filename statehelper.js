@@ -28,7 +28,7 @@ angular.module('ui.router.stateHelper', [ 'ui.router' ])
             if(state.children && state.children.length){
                 state.children.forEach(function(childState){
                     childState.parent = state;
-                    self.setNestedState(childState, keepOriginalNames);
+                    self.state(childState, keepOriginalNames);
                 });
             }
 
