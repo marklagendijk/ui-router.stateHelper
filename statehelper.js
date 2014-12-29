@@ -45,7 +45,7 @@ angular.module('ui.router.stateHelper', [ 'ui.router' ])
          */
         function fixStateName(state){
             if(state.parent){
-                state.name = state.parent.name + '.' + state.name;
+                state.name = (angular.isObject(state.parent) ? state.parent.name : state.parent) + '.' + state.name;
             }
         }
     });
