@@ -2,7 +2,7 @@
 A helper module for AngularUI Router, which allows you to define your states as an object tree.
 
 ## Installation
-1. `bower install angular-ui-router.stateHelper`
+1. `bower install angular-ui-router.stateHelper` or `npm install angular-ui-router.statehelper`
 2. Reference `stateHelper.min.js`.
 3. Add a dependency on `ui.router.stateHelper` in your app module.
 
