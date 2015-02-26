@@ -8,6 +8,7 @@ A helper module for AngularUI Router, which allows you to define your states as 
 
 ## Usage
 ``` javascript
+// NOTE: when using child states with views you should make sure that its parent has a template containing a `ui-view` directive.
 angular.module('myApp', [ 'ui.router', 'ui.router.stateHelper' ])
     .config(function(stateHelperProvider){
         stateHelperProvider
@@ -17,7 +18,7 @@ angular.module('myApp', [ 'ui.router', 'ui.router.stateHelper' ])
                 children: [
                     {
                         name: 'contacts',
-                        templateUrl: 'contacts.html',
+                        template: '<ui-view />',
                         children: [
                             {
                                 name: 'list',
