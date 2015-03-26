@@ -30,6 +30,7 @@ angular.module('ui.router.stateHelper', [ 'ui.router' ])
                     childState.parent = state;
                     self.state(childState, keepOriginalNames);
                 });
+                addSiblings(state);
             }
 
             return self;
@@ -47,5 +48,16 @@ angular.module('ui.router.stateHelper', [ 'ui.router' ])
             if(state.parent){
                 state.name = (angular.isObject(state.parent) ? state.parent.name : state.parent) + '.' + state.name;
             }
+        }
+
+        function addSiblings(state) {
+            state.children.forEach(function (childState, idx, array) {
+                if (array[idx + 1]) {
+                    childState.nextSibling = array[idx + 1].name;
+                }
+                if (array[idx - 1]) {
+                    childState.previousSibling = array[idx - 1].name;
+                }
+            });
         }
     });
