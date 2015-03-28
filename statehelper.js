@@ -4,7 +4,7 @@
  * @license MIT
  */
 angular.module('ui.router.stateHelper', [ 'ui.router' ])
-    .provider('stateHelper', function($stateProvider){
+    .provider('stateHelper', ['$stateProvider', function($stateProvider){
         var self = this;
 
         /**
@@ -48,4 +48,4 @@ angular.module('ui.router.stateHelper', [ 'ui.router' ])
                 state.name = (angular.isObject(state.parent) ? state.parent.name : state.parent) + '.' + state.name;
             }
         }
-    });
+    }]);
