@@ -2,6 +2,8 @@
 describe('ui-router.stateHelper', function(){
     var stateHelperProvider, $stateProvider, rootState, expectedState;
 
+    var stateHelperProviderState;
+
     beforeEach(module('ui.router.stateHelper', function(_stateHelperProvider_, _$stateProvider_){
         stateHelperProvider = _stateHelperProvider_;
         $stateProvider = _$stateProvider_;
@@ -26,7 +28,7 @@ describe('ui-router.stateHelper', function(){
             ]
         };
 
-        spyOn($stateProvider, 'state');
+        spyOn($stateProvider, 'state').and.callThrough();
     }));
 
     describe('.state', function(){
@@ -49,11 +51,11 @@ describe('ui-router.stateHelper', function(){
                 ]
             };
 
-            stateHelperProvider.state(rootState);
+            stateHelperProviderState = stateHelperProvider.state(rootState);
         }));
 
         it('should set each state', function(){
-            expect($stateProvider.state.callCount).toBe(4);
+            expect($stateProvider.state.calls.count()).toBe(4);
         });
 
         it('should convert names to dot notation, set parent references', function(){
@@ -65,11 +67,12 @@ describe('ui-router.stateHelper', function(){
             expectedState.children[1].parent = expectedState;
             expectedState.children[1].children[0].parent = expectedState.children[1];
 
-            expect($stateProvider.state.argsForCall[0][0]).toEqual(expectedState);
+            // expect($stateProvider.state.argsForCall[0][0]).toEqual(expectedState);
+            expect($stateProvider.state.calls.argsFor(0)[0]).toEqual(expectedState);
         });
 
         it('should return itself to support chaining', function(){
-            expect(stateHelperProvider.state(rootState)).toBe(stateHelperProvider);
+            expect(stateHelperProviderState).toBe(stateHelperProvider);
         });
     });
 
@@ -105,14 +108,14 @@ describe('ui-router.stateHelper', function(){
             expectedState.children[1].parent = expectedState;
             expectedState.children[1].children[0].parent = expectedState.children[1];
 
-            expect($stateProvider.state.argsForCall[0][0]).toEqual(expectedState);
+            expect($stateProvider.state.calls.argsFor(0)[0]).toEqual(expectedState);
         });
     });
 
     describe('.setNestedState', function(){
         it('should support .setNestedState as legacy name', function(){
             stateHelperProvider.setNestedState(rootState);
-            expect($stateProvider.state.callCount).toBe(4);
+            expect($stateProvider.state.calls.count()).toBe(4);
         });
     });
 });
