@@ -95,14 +95,14 @@ angular.module('myApp', ['ui.router', 'ui.router.stateHelper'])
 		}, { siblingTraversal: true });
 	});
 
-console.long($state.get('resume.contactInfo').previousSibling) // undefined
-console.long($state.get('resume.contactInfo').nextSibling) // 'resume.experience' 
+console.log($state.get('resume.contactInfo').previousSibling) // undefined
+console.log($state.get('resume.contactInfo').nextSibling) // 'resume.experience' 
 
-console.long($state.get('resume.experience').previousSibling) // 'resume.contactInfo' 
-console.long($state.get('resume.experience').nextSibling) // 'resume.education' 
+console.log($state.get('resume.experience').previousSibling) // 'resume.contactInfo' 
+console.log($state.get('resume.experience').nextSibling) // 'resume.education' 
 
-console.long($state.get('resume.education').previousSibling) // 'resume.experience' 
-console.long($state.get('resume.education').nextSibling) // undefined
+console.log($state.get('resume.education').previousSibling) // 'resume.experience' 
+console.log($state.get('resume.education').nextSibling) // undefined
 ```
 
 
