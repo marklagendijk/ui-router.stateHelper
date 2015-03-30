@@ -42,12 +42,12 @@ describe('ui-router.stateHelper', function(){
                 children: [
                     {
                         name: 'root.login',
-                        nextSibling: 'root.backup',
+            //            nextSibling: 'root.backup',
                         templateUrl: '/partials/views/login.html'
                     },
                     {
                         name: 'root.backup',
-                        previousSibling: 'root.login',
+           //             previousSibling: 'root.login',
                         children: [
                             {
                                 name: 'root.backup.dashboard'
@@ -57,7 +57,7 @@ describe('ui-router.stateHelper', function(){
                 ]
             };
 
-            stateHelperProviderState = stateHelperProvider.state(rootState);
+            stateHelperProviderState = stateHelperProvider.state(rootState, { siblingTraversal: false});
         }));
 
         it('should set each state', function(){
@@ -89,12 +89,12 @@ describe('ui-router.stateHelper', function(){
                 children: [
                     {
                         name: 'login',
-                        nextSibling: 'backup',
+                        // nextSibling: 'backup',
                         templateUrl: '/partials/views/login.html'
                     },
                     {
                         name: 'backup',
-                        previousSibling: 'login',
+                        // previousSibling: 'login',
                         children: [
                             {
                                 name: 'dashboard'
@@ -104,7 +104,7 @@ describe('ui-router.stateHelper', function(){
                 ]
             };
 
-            stateHelperProvider.state(rootState, true);
+            stateHelperProvider.state(rootState, { keepOriginalNames: true });
         }));
 
         it('should not convert names to dot notation, set parent references', function(){
@@ -129,7 +129,7 @@ describe('ui-router.stateHelper', function(){
 
     describe('children have references to siblings', function (){
         beforeEach(function () {
-            stateHelperProvider.state(rootState);
+            stateHelperProvider.state(rootState, { siblingTraversal: true });
         });
 
         it('should see the next sibling', function (){

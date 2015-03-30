@@ -17,20 +17,43 @@ angular.module('ui.router.stateHelper', [ 'ui.router' ])
          *
          * @param {Object} state - A regular ui.router state object.
          * @param {Array} [state.children] - An optional array of child states.
-         * @param {Boolean} keepOriginalNames - An optional flag that prevents conversion of names to dot notation if true.
+         * @deprecated {Boolean} keepOriginalNames - An optional flag that prevents conversion 
+         *     of names to dot notation if true. (use options.keepOriginalNames instead)
+         * @param {Object} [options] - An optional options object.
+         * @param {Boolean} [options.keepOriginalNames=false] An optional flag that 
+         *     prevents conversion of names to dot notation if true.
+         * @param {Boolean} [options.siblingTraversal=false] An optional flag that 
+         *     adds `nextSibling` and `previousSibling` properties when enabled
          */
-        this.state = function(state, keepOriginalNames){
-            if(!keepOriginalNames){
+        this.state = function(state){
+            var args = Array.prototype.slice.apply(arguments);
+            var options = {
+                keepOriginalNames: false,
+                siblingTraversal: false
+            };  
+
+            if (typeof args[1] === 'boolean') {
+                options.keepOriginalNames = args[1];
+            } 
+            else if (typeof args[1] === 'object') {
+                angular.extend(options, args[1]);
+            }
+
+            if (!options.keepOriginalNames) {
                 fixStateName(state);
             }
+
             $stateProvider.state(state);
 
             if(state.children && state.children.length){
                 state.children.forEach(function(childState){
                     childState.parent = state;
-                    self.state(childState, keepOriginalNames);
+                    self.state(childState, options);
                 });
-                addSiblings(state);
+
+                if (options.siblingTraversal) {
+                    addSiblings(state);
+                }
             }
 
             return self;
